@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>A GCC/CMake Build environment for the STM32F4 Discovery</title>
-<!-- 2017-06-18 Sun 00:44 -->
+<!-- 2017-08-02 Wed 14:45 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="George Kontsevich" />
@@ -163,14 +163,17 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1">Intro</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This is a quick guide for making a complete build environment for programming the STM32F4 Discovery board. It's going to avoid using any IDEs and will just use the library provided by STM. I will try to explain every part of the toolchain but a few files will be copied from the templates STM provides
 </p>
-
+<blockquote>
+<p>
+Note: After getting some feedback online <a href="https://www.reddit.com/r/embedded/comments/6i5oj6/guide_for_setting_up_a_gcccmake_build_environment/?st=j5unasxe&sh=6c0ab5eb">here</a> and <a href="https://www.reddit.com/r/microcontrollers/comments/6hyd7w/guide_for_setting_up_a_gcccmake_build_environment/?st=j5unasw1&sh=b579b758">here</a>. It seems the Standard Peripheral Library I'm using is depricated. Please look over the comments carefully before you choose to use the setup I describe
+</p>
+</blockquote>
 <p>
 The directory layout is very simple
 </p>
@@ -649,12 +652,27 @@ I personally have almost no experience programming microcontrollers, so most of 
 <li>A more polished CMake/GCC environment is available on <a href="https://github.com/ObKo/stm32-cmake">github</a>, thanks to Konstantin Oblaukhov. It pretty much does what I did above, but it's written in a way where you can select your model number and cmake will do the rest for you. The CMake code is very clean, but uses the older 2.x style.
 </li>
 </ul>
+<blockquote>
+<p>
+This webpage is generated from an org-document (at <code>./index.org</code>) that also generates all the files described. 
+</p>
+
+<p>
+Once opened in Emacs:<br  />
+</p>
+<ul class="org-ul">
+<li><code>C-c C-e h h</code> generates the webpage  <br  />
+</li>
+<li><code>C-c C-v C-t</code> exports the code blocks into the appropriate files<br  />
+</li>
+</ul>
+</blockquote>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: George Kontsevich</p>
-<p class="date">Created: 2017-06-18 Sun 00:44</p>
+<p class="date">Created: 2017-08-02 Wed 14:45</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.1.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
