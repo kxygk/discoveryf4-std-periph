@@ -8,7 +8,9 @@
 
 * Intro
 This is a quick guide for making a complete build environment for programming the STM32F4 Discovery board. It's going to avoid using any IDEs and will just use the library provided by STM. I will try to explain every part of the toolchain but a few files will be copied from the templates STM provides
-
+#+BEGIN_QUOTE
+Note: After getting some feedback online [[https://www.reddit.com/r/embedded/comments/6i5oj6/guide_for_setting_up_a_gcccmake_build_environment/?st=j5unasxe&sh=6c0ab5eb][here]] and [[https://www.reddit.com/r/microcontrollers/comments/6hyd7w/guide_for_setting_up_a_gcccmake_build_environment/?st=j5unasw1&sh=b579b758][here]]. It seems the Standard Peripheral Library I'm using is depricated. Please look over the comments carefully before you choose to use the setup I describe
+#+END_QUOTE
 The directory layout is very simple
 #+BEGIN_SRC 
 /STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/
