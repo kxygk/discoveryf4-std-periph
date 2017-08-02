@@ -334,3 +334,10 @@ I personally have almost no experience programming microcontrollers, so most of 
 - Geoffrey Brown has a great book called [[https://www.cs.indiana.edu/~geobrown/book.pdf][Discovering the STM32 Microcontroller]] which you can get online. He provides his own [[https://github.com/geoffreymbrown/][templates]] using Make and CodeSourcery for the ~STM32 VL Discovery~. This seems like a really great book to start with if you want to really learn about programming ARM micros.
 
 - A more polished CMake/GCC environment is available on [[https://github.com/ObKo/stm32-cmake][github]], thanks to Konstantin Oblaukhov. It pretty much does what I did above, but it's written in a way where you can select your model number and cmake will do the rest for you. The CMake code is very clean, but uses the older 2.x style.
+#+BEGIN_QUOTE
+This webpage is generated from an org-document (at ~./index.org~) that also generates all the files described. 
+
+Once opened in Emacs:\\
+- ~C-c C-e h h~ generates the webpage  \\
+- ~C-c C-v C-t~ exports the code blocks into the appropriate files\\
+#+END_QUOTE
