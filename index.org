@@ -1,5 +1,5 @@
 #+TITLE: A GCC/CMake Build environment for the STM32F4 Discovery
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="./static/worg.css" />
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../static/worg.css" />
 #+options: num:nil
 # This will export a README.org file for Github, so that people that land in my repo know where to find the relevant webpage
 #+BEGIN_SRC org :tangle README.org :exports none
