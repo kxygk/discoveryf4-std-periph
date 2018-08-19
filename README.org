@@ -1,2 +1,2 @@
 
-see description [[http://geokon-gh.github.io/stm32f4/index.html][here]]
+see description [[http://geokon-gh.github.io/discoveryf4-std-periph/index.html][here]]
