@@ -1,4 +1,3 @@
-
 set(CMAKE_SYSTEM_NAME Generic) # 'Generic' is used for embedded systems
 
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
