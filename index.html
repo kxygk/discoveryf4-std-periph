@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2019-02-27 三 15:19 -->
+<!-- 2019-03-01 五 18:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A GCC/CMake Build environment for the STM32F4 Discovery</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="George Kontsevich">
-<meta name="description" content="Some linear algebra in Clojure - source at https://github.com/geokon-gh/linearsystems-part2"
+<meta name="description" content="A GCC/CMake Build environment for the STM32F4 Discovery"
 >
 <link rel="stylesheet" type="text/css" href="../static/worg.css" />
 <script type="text/javascript">
@@ -58,35 +58,40 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href=".."> UP </a>
+ |
+ <a accesskey="H" href=".."> HOME </a>
+</div><div id="content">
 <h1 class="title">A GCC/CMake Build environment for the STM32F4 Discovery</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org4e97d30">Intro</a></li>
-<li><a href="#org0f94eef">The toolchain</a></li>
-<li><a href="#orgb64bdc5">The STM Libraries</a></li>
-<li><a href="#org0dbda81">Building a template/example</a>
+<li><a href="#orgfc6eda1">Intro</a></li>
+<li><a href="#orgcdb278e">The toolchain</a></li>
+<li><a href="#orga588252">The STM Libraries</a></li>
+<li><a href="#orgf8bcf52">Building a template/example</a>
 <ul>
-<li><a href="#orgd0ba169">The Startup File</a></li>
-<li><a href="#org6aa2fb1">The Linker Script</a></li>
-<li><a href="#orgdc1d3fe">Building with CMake</a></li>
-<li><a href="#org90adaf2">Getting it all on the board.. with OpenOCD/GDB</a>
+<li><a href="#orgf074878">The Startup File</a></li>
+<li><a href="#org6dbb4eb">The Linker Script</a></li>
+<li><a href="#org8c18042">Building with CMake</a></li>
+<li><a href="#org97ab9c2">Getting it all on the board.. with OpenOCD/GDB</a>
 <ul>
-<li><a href="#orgc553686">OpenOCD</a></li>
-<li><a href="#org9c1aad4">GDB</a></li>
+<li><a href="#org950dd7e">OpenOCD</a></li>
+<li><a href="#orgd7e9178">GDB</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org5539e47">Other Resources</a></li>
+<li><a href="#org2ccf54e">Other Resources</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4e97d30" class="outline-2">
-<h2 id="org4e97d30">Intro</h2>
-<div class="outline-text-2" id="text-org4e97d30">
+
+<div id="outline-container-orgfc6eda1" class="outline-2">
+<h2 id="orgfc6eda1">Intro</h2>
+<div class="outline-text-2" id="text-orgfc6eda1">
 <p>
 This is a quick guide for making a complete build environment for programming the STM32F4 Discovery board. It's going to avoid using any IDEs and will just use the library provided by STM. I will try to explain every part of the toolchain but a few files will be copied from the templates STM provides
 </p>
@@ -114,9 +119,9 @@ The directory layout is very simple
 </div>
 </div>
 
-<div id="outline-container-org0f94eef" class="outline-2">
-<h2 id="org0f94eef">The toolchain</h2>
-<div class="outline-text-2" id="text-org0f94eef">
+<div id="outline-container-orgcdb278e" class="outline-2">
+<h2 id="orgcdb278e">The toolchain</h2>
+<div class="outline-text-2" id="text-orgcdb278e">
 <p>
 We're going to try to keep things really bare-bones. I'm building using <code>arm-none-eabi-gcc</code> and it's associated tools. I did this on a Debian system where this version of gcc can be installed from the repository.
 The build tool I'm using is CMake.
@@ -151,9 +156,9 @@ If you skip writing a toolchain file then CMake will default to your system comp
 </div>
 </div>
 
-<div id="outline-container-orgb64bdc5" class="outline-2">
-<h2 id="orgb64bdc5">The STM Libraries</h2>
-<div class="outline-text-2" id="text-orgb64bdc5">
+<div id="outline-container-orga588252" class="outline-2">
+<h2 id="orga588252">The STM Libraries</h2>
+<div class="outline-text-2" id="text-orga588252">
 <p>
 To easily write code for this board we will leverage the libraries provided by STM.
 The <a href="https://my.st.com/content/my_st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32065.license=1496454354142.html">libraries</a> come in two main parts:
@@ -290,9 +295,9 @@ There is a major annoyance that depending on the model you will include differen
 </div>
 </div>
 
-<div id="outline-container-org0dbda81" class="outline-2">
-<h2 id="org0dbda81">Building a template/example</h2>
-<div class="outline-text-2" id="text-org0dbda81">
+<div id="outline-container-orgf8bcf52" class="outline-2">
+<h2 id="orgf8bcf52">Building a template/example</h2>
+<div class="outline-text-2" id="text-orgf8bcf52">
 <p>
 Now that we have the library built, lets build an example. For simplicity and convenience I recommend just working with the template provided in <code>STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Project/STM32F4xx_StdPeriph_Templates/</code>
 We want to copy over the <code>main.c</code> and <code>main.h</code> in to our source directory. If you look in to these these templates you will see that they set up some clock "stuff" and GPIO variables - but will otherwise do nothing.
@@ -300,9 +305,9 @@ There is a little section labeled <code>Add your application code here</code> on
 </p>
 </div>
 
-<div id="outline-container-orgd0ba169" class="outline-3">
-<h3 id="orgd0ba169">The Startup File</h3>
-<div class="outline-text-3" id="text-orgd0ba169">
+<div id="outline-container-orgf074878" class="outline-3">
+<h3 id="orgf074878">The Startup File</h3>
+<div class="outline-text-3" id="text-orgf074878">
 <p>
 This first catch with programming the microcontroller is that you can't simply start at the top of <code>main()</code>. When the chip is powered off, the program is stored permanently in the Flash memory (ROM). Because there is no operating system to loading the program into RAM we need to do that ourselves in addition to initializing system clocks and event handlers.
 </p>
@@ -337,9 +342,9 @@ More details are on <a href="http://thehackerworkshop.com/?p=1138">Matthew Mucke
 </div>
 </div>
 
-<div id="outline-container-org6aa2fb1" class="outline-3">
-<h3 id="org6aa2fb1">The Linker Script</h3>
-<div class="outline-text-3" id="text-org6aa2fb1">
+<div id="outline-container-org6dbb4eb" class="outline-3">
+<h3 id="org6dbb4eb">The Linker Script</h3>
+<div class="outline-text-3" id="text-org6dbb4eb">
 <p>
 When an application normally runs on a desktop machine it's generally running using virtual memory in a virtual application-specific address space. From the applications point of view it can manipulate it's own memory however it wants - and it's the operating system that then translates that into safe operations on the actually memory (for instance to insure that the applications doesn't touch any memory region it shouldn't)
 </p>
@@ -354,9 +359,9 @@ Again, STM provides us with one in <code>STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Proj
 </div>
 </div>
 
-<div id="outline-container-orgdc1d3fe" class="outline-3">
-<h3 id="orgdc1d3fe">Building with CMake</h3>
-<div class="outline-text-3" id="text-orgdc1d3fe">
+<div id="outline-container-org8c18042" class="outline-3">
+<h3 id="org8c18042">Building with CMake</h3>
+<div class="outline-text-3" id="text-org8c18042">
 <p>
 Now that we have all the pieces we can glue it all together with a little CMake
 </p>
@@ -411,17 +416,17 @@ are we're done!
 </div>
 </div>
 
-<div id="outline-container-org90adaf2" class="outline-3">
-<h3 id="org90adaf2">Getting it all on the board.. with OpenOCD/GDB</h3>
-<div class="outline-text-3" id="text-org90adaf2">
+<div id="outline-container-org97ab9c2" class="outline-3">
+<h3 id="org97ab9c2">Getting it all on the board.. with OpenOCD/GDB</h3>
+<div class="outline-text-3" id="text-org97ab9c2">
 <p>
 In our build directory we should now see a <code>example.elf</code> . This is the file we want to get on our micrcontroller
 </p>
 </div>
 
-<div id="outline-container-orgc553686" class="outline-4">
-<h4 id="orgc553686">OpenOCD</h4>
-<div class="outline-text-4" id="text-orgc553686">
+<div id="outline-container-org950dd7e" class="outline-4">
+<h4 id="org950dd7e">OpenOCD</h4>
+<div class="outline-text-4" id="text-org950dd7e">
 <p>
 Each development board will generally come with additional hardware for debugging and loading new programs onto the actual chip. On easy-to-use boards such as this one. this chip will talk over USB and will have its own protocols like JTAG and SWD. However, as the user we don't really want to have to deal with these protocols directly, nor do we really want to interact with this helper-chip. 
 </p>
@@ -486,9 +491,9 @@ So now lets connect to it over GDB
 </div>
 </div>
 
-<div id="outline-container-org9c1aad4" class="outline-4">
-<h4 id="org9c1aad4">GDB</h4>
-<div class="outline-text-4" id="text-org9c1aad4">
+<div id="outline-container-orgd7e9178" class="outline-4">
+<h4 id="orgd7e9178">GDB</h4>
+<div class="outline-text-4" id="text-orgd7e9178">
 <p>
 In a new console window run
 </p>
@@ -543,9 +548,9 @@ We have our template/example on the board :) You can now take any example from o
 </div>
 </div>
 
-<div id="outline-container-org5539e47" class="outline-2">
-<h2 id="org5539e47">Other Resources</h2>
-<div class="outline-text-2" id="text-org5539e47">
+<div id="outline-container-org2ccf54e" class="outline-2">
+<h2 id="org2ccf54e">Other Resources</h2>
+<div class="outline-text-2" id="text-org2ccf54e">
 <p>
 I personally have almost no experience programming microcontrollers, so most of this guide has beenput together by reading-the-manual and a lot of tid-bits from other resources
 </p>
@@ -575,7 +580,7 @@ Once opened in Emacs:<br>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: George Kontsevich</p>
-<p class="date">Created: 2019-02-27 三 15:19</p>
+<p class="date">Created: 2019-03-01 五 18:57</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

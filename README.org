@@ -1,11 +1,15 @@
 #+TITLE: A GCC/CMake Build environment for the STM32F4 Discovery
-#+HTML_DOCTYPE: html5
-#+DESCRIPTION: Some linear algebra in Clojure - source at https://github.com/geokon-gh/linearsystems-part2
-#+OPTIONS: html-style:nil
+#+DESCRIPTION: A GCC/CMake Build environment for the STM32F4 Discovery
 
+#+EXPORT_FILE_NAME: index.html
+#+HTML_DOCTYPE: html5
+#+HTML_LINK_UP: ..
+#+HTML_LINK_HOME: ..
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../static/worg.css" />
-#+options: num:nil
-# This will export a README.org file for Github, so that people that land in my repo know where to find the relevant webpage
+#+HTML_MATHJAX: path: "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"
+#+OPTIONS: html-style:nil
+#+OPTIONS: num:nil
+
 #+BEGIN_SRC org :tangle README.org :exports none
   see description [[http://geokon-gh.github.io/discoveryf4-std-periph/index.html][here]]
 #+END_SRC
