@@ -5,14 +5,13 @@
 #+HTML_DOCTYPE: html5
 #+HTML_LINK_UP: ..
 #+HTML_LINK_HOME: ..
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../static/worg.css" />
-#+HTML_MATHJAX: path: "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../web/worg.css" />
+#+HTML_HEAD_EXTRA: <link rel="shortcut icon" href="../web/panda.svg" type="image/x-icon">
+#+HTML_MATHJAX: path: "../MathJax/MathJax.js?config=TeX-AMS_CHTML"
 #+OPTIONS: html-style:nil
 #+OPTIONS: num:nil
-
-#+BEGIN_SRC org :tangle README.org :exports none
-  see description [[http://geokon-gh.github.io/discoveryf4-std-periph/index.html][here]]
-#+END_SRC
+#+OPTIONS: html-postamble:nil
+#+OPTIONS: html-scripts:nil
 
 * Intro
 This is a quick guide for making a complete build environment for programming the STM32F4 Discovery board. It's going to avoid using any IDEs and will just use the library provided by STM. I will try to explain every part of the toolchain but a few files will be copied from the templates STM provides

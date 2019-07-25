@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2019-03-01 五 18:57 -->
+<!-- 2019-07-25 Thu 11:25 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A GCC/CMake Build environment for the STM32F4 Discovery</title>
@@ -9,53 +9,8 @@
 <meta name="author" content="George Kontsevich">
 <meta name="description" content="A GCC/CMake Build environment for the STM32F4 Discovery"
 >
-<link rel="stylesheet" type="text/css" href="../static/worg.css" />
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2018 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
+<link rel="stylesheet" type="text/css" href="../web/worg.css" />
+<link rel="shortcut icon" href="../web/panda.svg" type="image/x-icon">
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -68,30 +23,30 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfc6eda1">Intro</a></li>
-<li><a href="#orgcdb278e">The toolchain</a></li>
-<li><a href="#orga588252">The STM Libraries</a></li>
-<li><a href="#orgf8bcf52">Building a template/example</a>
+<li><a href="#orgc1c2918">Intro</a></li>
+<li><a href="#org9e51597">The toolchain</a></li>
+<li><a href="#org0a2a849">The STM Libraries</a></li>
+<li><a href="#org85c5db5">Building a template/example</a>
 <ul>
-<li><a href="#orgf074878">The Startup File</a></li>
-<li><a href="#org6dbb4eb">The Linker Script</a></li>
-<li><a href="#org8c18042">Building with CMake</a></li>
-<li><a href="#org97ab9c2">Getting it all on the board.. with OpenOCD/GDB</a>
+<li><a href="#org8dbdfd2">The Startup File</a></li>
+<li><a href="#orge3ca89d">The Linker Script</a></li>
+<li><a href="#org2c298fa">Building with CMake</a></li>
+<li><a href="#orgf211474">Getting it all on the board.. with OpenOCD/GDB</a>
 <ul>
-<li><a href="#org950dd7e">OpenOCD</a></li>
-<li><a href="#orgd7e9178">GDB</a></li>
+<li><a href="#org46ea4b4">OpenOCD</a></li>
+<li><a href="#org32c2784">GDB</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org2ccf54e">Other Resources</a></li>
+<li><a href="#org6ae24f2">Other Resources</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfc6eda1" class="outline-2">
-<h2 id="orgfc6eda1">Intro</h2>
-<div class="outline-text-2" id="text-orgfc6eda1">
+<div id="outline-container-orgc1c2918" class="outline-2">
+<h2 id="orgc1c2918">Intro</h2>
+<div class="outline-text-2" id="text-orgc1c2918">
 <p>
 This is a quick guide for making a complete build environment for programming the STM32F4 Discovery board. It's going to avoid using any IDEs and will just use the library provided by STM. I will try to explain every part of the toolchain but a few files will be copied from the templates STM provides
 </p>
@@ -119,9 +74,9 @@ The directory layout is very simple
 </div>
 </div>
 
-<div id="outline-container-orgcdb278e" class="outline-2">
-<h2 id="orgcdb278e">The toolchain</h2>
-<div class="outline-text-2" id="text-orgcdb278e">
+<div id="outline-container-org9e51597" class="outline-2">
+<h2 id="org9e51597">The toolchain</h2>
+<div class="outline-text-2" id="text-org9e51597">
 <p>
 We're going to try to keep things really bare-bones. I'm building using <code>arm-none-eabi-gcc</code> and it's associated tools. I did this on a Debian system where this version of gcc can be installed from the repository.
 The build tool I'm using is CMake.
@@ -132,22 +87,22 @@ We tell CMake about our toolchain through the a toolchain file
 see: <a href="https://cmake.org/cmake/help/v3.6/manual/cmake-toolchains.7.html">https://cmake.org/cmake/help/v3.6/manual/cmake-toolchains.7.html</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-cmake">set(CMAKE_SYSTEM_NAME Generic) # 'Generic' is used for embedded systems
+<pre class="src src-cmake"><span style="color: #006699;">set</span>(CMAKE_SYSTEM_NAME Generic) <span style="color: #8D8D84; font-style: italic;"># 'Generic' is used for embedded systems</span>
 
-set(CMAKE_C_COMPILER arm-none-eabi-gcc)
-set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
-set(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
+<span style="color: #006699;">set</span>(CMAKE_C_COMPILER arm-none-eabi-gcc)
+<span style="color: #006699;">set</span>(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+<span style="color: #006699;">set</span>(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
 
-# tells CMake not to try to link executables during its interal checks
-# things are not going to link properly without a linker script
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+<span style="color: #8D8D84; font-style: italic;"># tells CMake not to try to link executables during its interal checks</span>
+<span style="color: #8D8D84; font-style: italic;"># things are not going to link properly without a linker script</span>
+<span style="color: #006699;">set</span>(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
-set(CMAKE_OBJDUMP arm-none-eabi-objdump)
-set(CMAKE_SIZE arm-none-eabi-size)
-set(CMAKE_DEBUGGER arm-none-eabi-gdb)
-set(CMAKE_DEBUGGER arm-none-eabi-gdb)
-set(CMAKE_CPPFILT arm-none-eabi-c++filt)
+<span style="color: #006699;">set</span>(CMAKE_OBJCOPY arm-none-eabi-objcopy)
+<span style="color: #006699;">set</span>(CMAKE_OBJDUMP arm-none-eabi-objdump)
+<span style="color: #006699;">set</span>(CMAKE_SIZE arm-none-eabi-size)
+<span style="color: #006699;">set</span>(CMAKE_DEBUGGER arm-none-eabi-gdb)
+<span style="color: #006699;">set</span>(CMAKE_DEBUGGER arm-none-eabi-gdb)
+<span style="color: #006699;">set</span>(CMAKE_CPPFILT arm-none-eabi-c++filt)
 </pre>
 </div>
 <p>
@@ -156,9 +111,9 @@ If you skip writing a toolchain file then CMake will default to your system comp
 </div>
 </div>
 
-<div id="outline-container-orga588252" class="outline-2">
-<h2 id="orga588252">The STM Libraries</h2>
-<div class="outline-text-2" id="text-orga588252">
+<div id="outline-container-org0a2a849" class="outline-2">
+<h2 id="org0a2a849">The STM Libraries</h2>
+<div class="outline-text-2" id="text-org0a2a849">
 <p>
 To easily write code for this board we will leverage the libraries provided by STM.
 The <a href="https://my.st.com/content/my_st_com/en/products/embedded-software/mcus-embedded-software/stm32-embedded-software/stm32-standard-peripheral-libraries/stsw-stm32065.license=1496454354142.html">libraries</a> come in two main parts:
@@ -175,7 +130,7 @@ The <a href="https://my.st.com/content/my_st_com/en/products/embedded-software/m
 <li>Finally there is one last file that glues everything together. This is <code>stm32f4xx.h</code> which lives in <code>/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Libraries/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h</code>  In short, it specifies (and isolates) all the model specific parameters of the chip you are using. This will affect both libraries so it's sorta what needs to be defined before anything else. Conveniently <code>stm32f4xx.h</code> will include the CMSIS (<i>line 817</i>) and the Peripheral Library (if enabled) itself. So later in our main.h we will just have a:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-c"><span style="color: #b218b2;">#include</span> <span style="color: #ff1f8b;">"stm32f4.h"</span>
+<pre class="src src-c"><span style="color: #808080;">#include</span> <span style="color: #008000;">"stm32f4.h"</span>
 </pre>
 </div>
 <p>
@@ -186,9 +141,9 @@ and everything will get included
 If you look at the opening comment in <code>stm32f4xx.h</code> you might be a bit confused, but naturally you're <b>required</b> to select a device using the preprocessor - otherwise you will get an error on build (<i>see lines 68-123</i>). You also need to pass in a value to enable the peripheral library. At the end of <code>stm32f4xx.h</code> you will see a conditional include
 </p>
 <div class="org-src-container">
-<pre class="src src-c++"><span style="color: #b218b2;">#ifdef</span> USE_STDPERIPH_DRIVER
-<span style="color: #b218b2;">  #include</span> <span style="color: #ff1f8b;">"stm32f4xx_conf.h"</span>
-<span style="color: #b218b2;">#endif</span> <span style="color: #b2b2b2; font-style: italic;">/* </span><span style="color: #b2b2b2; font-style: italic;">USE_STDPERIPH_DRIVER */</span>
+<pre class="src src-c++"><span style="color: #808080;">#ifdef</span> USE_STDPERIPH_DRIVER
+<span style="color: #808080;">  #include</span> <span style="color: #008000;">"stm32f4xx_conf.h"</span>
+<span style="color: #808080;">#endif</span> <span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">USE_STDPERIPH_DRIVER */</span>
 </pre>
 </div>
 <p>
@@ -204,11 +159,11 @@ Why is this file here and not with the others? I'm not really sure. For the sake
 Now that we have all the pieced, the final step is to write a cmake file that will build the library into a .so file.
 </p>
 <div class="org-src-container">
-<pre class="src src-cmake">cmake_minimum_required(VERSION 3.0)
-project(STM32F4xx_DSP_StdPeriph_Lib-for-STM32F40_41xxx VERSION 1.8.0 LANGUAGES C)
+<pre class="src src-cmake"><span style="color: #006699;">cmake_minimum_required</span>(VERSION 3.0)
+<span style="color: #006699;">project</span>(STM32F4xx_DSP_StdPeriph_Lib-for-STM32F40_41xxx VERSION 1.8.0 LANGUAGES C)
 
-# include the standard library implementation
-set(src 
+<span style="color: #8D8D84; font-style: italic;"># include the standard library implementation</span>
+<span style="color: #006699;">set</span>(src 
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_wwdg.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_tim.c
@@ -232,7 +187,7 @@ set(src
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_gpio.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fsmc.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmpi2c.c
-  #Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmc.c
+  <span style="color: #8D8D84; font-style: italic;">#Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmc.c</span>
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_flash.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_flash_ramfunc.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_exti.c
@@ -253,31 +208,31 @@ set(src
   Libraries/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_adc.c
   Libraries/STM32F4xx_StdPeriph_Driver/src/misc.c)
 
-add_library(stm32f4 ${src})
+<span style="color: #006699;">add_library</span>(stm32f4 ${<span style="color: #BA36A5;">src</span>})
 
-# set the chip model number
-target_compile_definitions(stm32f4 PUBLIC STM32F40_41xxx)
-# turn on using the peripherals
-target_compile_definitions(stm32f4 PUBLIC USE_STDPERIPH_DRIVER)
+<span style="color: #8D8D84; font-style: italic;"># set the chip model number</span>
+<span style="color: #006699;">target_compile_definitions</span>(stm32f4 PUBLIC STM32F40_41xxx)
+<span style="color: #8D8D84; font-style: italic;"># turn on using the peripherals</span>
+<span style="color: #006699;">target_compile_definitions</span>(stm32f4 PUBLIC USE_STDPERIPH_DRIVER)
 
-# the chip specific configurations
-target_include_directories(stm32f4 
+<span style="color: #8D8D84; font-style: italic;"># the chip specific configurations</span>
+<span style="color: #006699;">target_include_directories</span>(stm32f4 
   PUBLIC
   Libraries/CMSIS/Device/ST/STM32F4xx/Include/)
-# the peripheral configuration file 
-#(again: normally you'd have a copy in your src directory)
-target_include_directories(stm32f4 
+<span style="color: #8D8D84; font-style: italic;"># the peripheral configuration file </span>
+<span style="color: #8D8D84; font-style: italic;">#(again: normally you'd have a copy in your src directory)</span>
+<span style="color: #006699;">target_include_directories</span>(stm32f4 
   PUBLIC Project/STM32F4xx_StdPeriph_Templates/)
-# the CMSIS interface
-target_include_directories(stm32f4 
+<span style="color: #8D8D84; font-style: italic;"># the CMSIS interface</span>
+<span style="color: #006699;">target_include_directories</span>(stm32f4 
   PUBLIC Libraries/CMSIS/Include)
-# the standard library headers
-target_include_directories(stm32f4 
+<span style="color: #8D8D84; font-style: italic;"># the standard library headers</span>
+<span style="color: #006699;">target_include_directories</span>(stm32f4 
   PUBLIC Libraries/STM32F4xx_StdPeriph_Driver/inc/)
 
-# The PUBLIC keyword sets these flags to be part of the interface.
-# So any executable that links this library will have to use these flags as well
-target_compile_options(stm32f4 PUBLIC
+<span style="color: #8D8D84; font-style: italic;"># The PUBLIC keyword sets these flags to be part of the interface.</span>
+<span style="color: #8D8D84; font-style: italic;"># So any executable that links this library will have to use these flags as well</span>
+<span style="color: #006699;">target_compile_options</span>(stm32f4 PUBLIC
   -mcpu=cortex-m4 
   -mthumb 
   -mthumb-interwork 
@@ -295,9 +250,9 @@ There is a major annoyance that depending on the model you will include differen
 </div>
 </div>
 
-<div id="outline-container-orgf8bcf52" class="outline-2">
-<h2 id="orgf8bcf52">Building a template/example</h2>
-<div class="outline-text-2" id="text-orgf8bcf52">
+<div id="outline-container-org85c5db5" class="outline-2">
+<h2 id="org85c5db5">Building a template/example</h2>
+<div class="outline-text-2" id="text-org85c5db5">
 <p>
 Now that we have the library built, lets build an example. For simplicity and convenience I recommend just working with the template provided in <code>STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Project/STM32F4xx_StdPeriph_Templates/</code>
 We want to copy over the <code>main.c</code> and <code>main.h</code> in to our source directory. If you look in to these these templates you will see that they set up some clock "stuff" and GPIO variables - but will otherwise do nothing.
@@ -305,9 +260,9 @@ There is a little section labeled <code>Add your application code here</code> on
 </p>
 </div>
 
-<div id="outline-container-orgf074878" class="outline-3">
-<h3 id="orgf074878">The Startup File</h3>
-<div class="outline-text-3" id="text-orgf074878">
+<div id="outline-container-org8dbdfd2" class="outline-3">
+<h3 id="org8dbdfd2">The Startup File</h3>
+<div class="outline-text-3" id="text-org8dbdfd2">
 <p>
 This first catch with programming the microcontroller is that you can't simply start at the top of <code>main()</code>. When the chip is powered off, the program is stored permanently in the Flash memory (ROM). Because there is no operating system to loading the program into RAM we need to do that ourselves in addition to initializing system clocks and event handlers.
 </p>
@@ -342,9 +297,9 @@ More details are on <a href="http://thehackerworkshop.com/?p=1138">Matthew Mucke
 </div>
 </div>
 
-<div id="outline-container-org6dbb4eb" class="outline-3">
-<h3 id="org6dbb4eb">The Linker Script</h3>
-<div class="outline-text-3" id="text-org6dbb4eb">
+<div id="outline-container-orge3ca89d" class="outline-3">
+<h3 id="orge3ca89d">The Linker Script</h3>
+<div class="outline-text-3" id="text-orge3ca89d">
 <p>
 When an application normally runs on a desktop machine it's generally running using virtual memory in a virtual application-specific address space. From the applications point of view it can manipulate it's own memory however it wants - and it's the operating system that then translates that into safe operations on the actually memory (for instance to insure that the applications doesn't touch any memory region it shouldn't)
 </p>
@@ -359,43 +314,43 @@ Again, STM provides us with one in <code>STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Proj
 </div>
 </div>
 
-<div id="outline-container-org8c18042" class="outline-3">
-<h3 id="org8c18042">Building with CMake</h3>
-<div class="outline-text-3" id="text-org8c18042">
+<div id="outline-container-org2c298fa" class="outline-3">
+<h3 id="org2c298fa">Building with CMake</h3>
+<div class="outline-text-3" id="text-org2c298fa">
 <p>
 Now that we have all the pieces we can glue it all together with a little CMake
 </p>
 
 <div class="org-src-container">
-<pre class="src src-cmake">cmake_minimum_required(VERSION 3.0)
-enable_language(ASM)
+<pre class="src src-cmake"><span style="color: #006699;">cmake_minimum_required</span>(VERSION 3.0)
+<span style="color: #006699;">enable_language</span>(ASM)
 
-set(src 
+<span style="color: #006699;">set</span>(src 
   STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc_ride7/startup_stm32f40_41xxx.s
   STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Libraries/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
   src/main.c)
 
-add_executable(example.elf ${src})
-target_include_directories( example.elf PRIVATE src/ )
+<span style="color: #006699;">add_executable</span>(example.elf ${<span style="color: #BA36A5;">src</span>})
+<span style="color: #006699;">target_include_directories</span>( example.elf PRIVATE src/ )
 
-add_subdirectory(STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/)
-target_link_libraries( example.elf stm32f4 )
+<span style="color: #006699;">add_subdirectory</span>(STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/)
+<span style="color: #006699;">target_link_libraries</span>( example.elf stm32f4 )
 
-file(COPY 
-  ${CMAKE_CURRENT_SOURCE_DIR}/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Project/STM32F4xx_StdPeriph_Templates/TrueSTUDIO/STM32F40_41xxx/STM32F417IG_FLASH.ld
+<span style="color: #006699;">file</span>(COPY 
+  ${<span style="color: #BA36A5;">CMAKE_CURRENT_SOURCE_DIR</span>}/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0/Project/STM32F4xx_StdPeriph_Templates/TrueSTUDIO/STM32F40_41xxx/STM32F417IG_FLASH.ld
   DESTINATION
-  ${CMAKE_BINARY_DIR})
+  ${<span style="color: #BA36A5;">CMAKE_BINARY_DIR</span>})
 
-set_target_properties(
+<span style="color: #006699;">set_target_properties</span>(
   example.elf 
   PROPERTIES 
   LINK_FLAGS 
-  "-TSTM32F417IG_FLASH.ld \
-   -mthumb \
-   -mcpu=cortex-m4 \
-   -mfloat-abi=hard \
-   -mfpu=fpv4-sp-d16 \
-   -Wl,--gc-sections")
+  <span style="color: #008000;">"-TSTM32F417IG_FLASH.ld \</span>
+<span style="color: #008000;">   -mthumb \</span>
+<span style="color: #008000;">   -mcpu=cortex-m4 \</span>
+<span style="color: #008000;">   -mfloat-abi=hard \</span>
+<span style="color: #008000;">   -mfpu=fpv4-sp-d16 \</span>
+<span style="color: #008000;">   -Wl,--gc-sections"</span>)
 </pre>
 </div>
 <p>
@@ -416,17 +371,17 @@ are we're done!
 </div>
 </div>
 
-<div id="outline-container-org97ab9c2" class="outline-3">
-<h3 id="org97ab9c2">Getting it all on the board.. with OpenOCD/GDB</h3>
-<div class="outline-text-3" id="text-org97ab9c2">
+<div id="outline-container-orgf211474" class="outline-3">
+<h3 id="orgf211474">Getting it all on the board.. with OpenOCD/GDB</h3>
+<div class="outline-text-3" id="text-orgf211474">
 <p>
 In our build directory we should now see a <code>example.elf</code> . This is the file we want to get on our micrcontroller
 </p>
 </div>
 
-<div id="outline-container-org950dd7e" class="outline-4">
-<h4 id="org950dd7e">OpenOCD</h4>
-<div class="outline-text-4" id="text-org950dd7e">
+<div id="outline-container-org46ea4b4" class="outline-4">
+<h4 id="org46ea4b4">OpenOCD</h4>
+<div class="outline-text-4" id="text-org46ea4b4">
 <p>
 Each development board will generally come with additional hardware for debugging and loading new programs onto the actual chip. On easy-to-use boards such as this one. this chip will talk over USB and will have its own protocols like JTAG and SWD. However, as the user we don't really want to have to deal with these protocols directly, nor do we really want to interact with this helper-chip. 
 </p>
@@ -491,9 +446,9 @@ So now lets connect to it over GDB
 </div>
 </div>
 
-<div id="outline-container-orgd7e9178" class="outline-4">
-<h4 id="orgd7e9178">GDB</h4>
-<div class="outline-text-4" id="text-orgd7e9178">
+<div id="outline-container-org32c2784" class="outline-4">
+<h4 id="org32c2784">GDB</h4>
+<div class="outline-text-4" id="text-org32c2784">
 <p>
 In a new console window run
 </p>
@@ -548,9 +503,9 @@ We have our template/example on the board :) You can now take any example from o
 </div>
 </div>
 
-<div id="outline-container-org2ccf54e" class="outline-2">
-<h2 id="org2ccf54e">Other Resources</h2>
-<div class="outline-text-2" id="text-org2ccf54e">
+<div id="outline-container-org6ae24f2" class="outline-2">
+<h2 id="org6ae24f2">Other Resources</h2>
+<div class="outline-text-2" id="text-org6ae24f2">
 <p>
 I personally have almost no experience programming microcontrollers, so most of this guide has beenput together by reading-the-manual and a lot of tid-bits from other resources
 </p>
@@ -577,11 +532,6 @@ Once opened in Emacs:<br>
 </blockquote>
 </div>
 </div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: George Kontsevich</p>
-<p class="date">Created: 2019-03-01 五 18:57</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
